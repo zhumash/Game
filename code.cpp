@@ -5,10 +5,29 @@
 
 using namespace std;
 
+bool IsNum(string x){
+    for(int  i = (x[i] == '-'); i < x.size(); ++i){
+        if(x[i] > '9' || x[i] < '0')return 0;
+    }
+    return 1;
+}
+
+int toNum(string x){
+    int ans = 0;
+    for(int i = (x[0] == '-'); i < x.size(); ++i){
+        int mnj = 1;
+        for(int j = 0; j < x.size() - i - 1; ++j ){
+            mnj *= 10;
+        }
+        ans += mnj*(x[i] - '0');
+    }
+    return ans - 2 * ans * (x[0] == '-');
+}
+
 int main(){
     int n1,n2;
     int score = 0;
-    int ans;
+    string ans;
     string live = "***";
     char oo[3] = {'+','-','*'};
     string name;
@@ -35,10 +54,11 @@ int main(){
         cout << n1 << " "<< oo[rd] << " " << n2 << endl << endl;
         double tm = clock();
         cin >> ans;
-        if((clock() - tm) / CLOCKS_PER_SEC <= 5){
+        double tmm = (clock() - tm) / CLOCKS_PER_SEC;
+        if(tmm <= 5 && IsNum(ans)){
         if(oo[rd] == '*'){
-            if(n1 * n2 == ans){
-                if((clock() - tm) / CLOCKS_PER_SEC <= 2)score += 10;
+            if(n1 * n2 == toNum(ans)){
+                if(tmm <= 2)score += 10;
                 else score += 5;
             }   
             else {
@@ -46,8 +66,8 @@ int main(){
             }            
         }
         else if(oo[rd] == '+'){
-            if(n1 + n2 == ans){
-                if((clock() - tm) / CLOCKS_PER_SEC <= 2)score += 10;
+            if(n1 + n2 == toNum(ans)){
+                if(tmm <= 2)score += 10;
                 else score += 5;
             }
             else {
@@ -55,8 +75,8 @@ int main(){
             } 
         }
         else if(oo[rd] == '-'){
-            if(n1 - n2 == ans){
-                if((clock() - tm) / CLOCKS_PER_SEC <= 2)score += 10;
+            if(n1 - n2 == toNum(ans)){
+                if(tmm <= 2)score += 10;
                 else score += 5;
             } 
              else {
@@ -80,7 +100,7 @@ int main(){
     cout << x << ' ' << scr;
     fclose(stdout);
     fclose(stdin);
-    freopen("CON","w",stdout); 
+    freopen("CON","w",stdout);  
     for(int i = 0; i < 4; ++i)cout << endl;
                 cout << "GAME IS OVER" << endl;
             cout << "Score: " << score << endl;
