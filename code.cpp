@@ -25,6 +25,7 @@ int toNum(string x){
 }
 
 int main(){
+    // ADDED SOME CHANGES
     int n1,n2;
     int score = 0;
     string ans;
